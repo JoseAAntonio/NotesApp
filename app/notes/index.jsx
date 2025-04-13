@@ -10,6 +10,22 @@ const NoteScreen = () => {
     const [modalisible, setModalVisible] = useState(false);
     const [newNote, setNewNote] = useState('');
 
+    //!SECTION Add new note
+    const addNote = () => {
+        if (newNote.trim() === '') return;
+
+        setNotes((prevNotes) => [
+            ...prevNotes,
+            {
+                id: Date.now.toString(),
+                text: newNote
+            },
+        ]);
+
+        setNewNote('');
+        setModalVisible(false)
+    }
+
     return (
         <View style={styles.container}>
             <FlatList 
