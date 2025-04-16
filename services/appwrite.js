@@ -9,7 +9,7 @@ const config = {
     col: {
         notes: process.env.EXPO_PUBLIC_APPWRITE_COL_NOTES_ID, // Your collection ID
     },
-}
+};
 
 const client = new Client()  
     .setEndpoint(config.endpoint) // Your API Endpoint
@@ -17,12 +17,14 @@ const client = new Client()
 
 switch (Platform.OS) {
     case 'ios':
-        client. setPlatform(process.env.EXPO_PUBLIC_APPWRITE_BUNDLE_ID); // Your iOS bundle ID
+        client. setPlatform(process.env.EXPO_PUBLIC_APPWRITE_BUNDLE_ID); 
         break;
     case 'android':
-        client.setPlatform(process.env.EXPO_PUBLIC_APPWRITE_PACKAGE_NAME); // Your Android package name
+        client.setPlatform(process.env.EXPO_PUBLIC_APPWRITE_PACKAGE_NAME);
         break;
+}
 
-const databases = new Databases(client);
+const database = new Databases(client);
 
-export { databases, config, client};
+export { database, config, client };
+
