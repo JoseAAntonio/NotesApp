@@ -16,7 +16,9 @@ const RootLayout = () => {
         paddingHorizontal: 10,
         paddingTop: 10,
         backgroundColor: 'fff'
-      }
+      },
+      headerSafeAreaInsets: { top: 0 },
+      statusBarStyle: 'light'
     }}
   >
     <Stack.Screen
