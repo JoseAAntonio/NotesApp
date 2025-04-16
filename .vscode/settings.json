@@ -1,10 +1,10 @@
 {
     "editor.inlineSuggest.enabled": false,
     "editor.quickSuggestions": {
-        "other": false,
-        "comments": false,
-        "strings": false
+        "other": true,
+        "comments": true,
+        "strings": true
     },
-    "editor.suggestOnTriggerCharacters": false,
-    "editor.acceptSuggestionOnCommitCharacter": false
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.acceptSuggestionOnCommitCharacter": true
 }
