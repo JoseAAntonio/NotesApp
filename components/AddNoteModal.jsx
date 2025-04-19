@@ -43,7 +43,7 @@ const AddNoteModal = ({
                 <Text style={styles.cancelButtonText}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.saveButton} onPress={addNote}>
-                <Text style={styles.savelButtonText}>Save</Text>
+                <Text style={styles.saveButtonText}>Save</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20, // Horizontal padding for better touch area
         borderRadius: 5, // Rounded corners for the button
       },
-      savelButtonText: {
+      saveButtonText: {
         color: "#fff", // White text for contrast
         fontSize: 16, // Font size for readability
         fontWeight: "bold", // Bold text for emphasis

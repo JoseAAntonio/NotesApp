@@ -12,8 +12,7 @@ import {
 
 import NoteList from "@/components/NoteList";
 import AddNoteModal from "@/components/AddNoteModal";
-import noteService from '@/services/noteService';
-
+import noteService from "@/services/noteService";
 
 const NoteScreen = () => {
   const [notes, setNotes] = useState([]);
@@ -30,29 +29,28 @@ const NoteScreen = () => {
     setLoading(true);
     const response = await noteService.getNotes();
 
-    if(response.error) {
+    if (response.error) {
       setError(response.error);
-      Alert.alert('Error', response.error)
+      Alert.alert("Error", response.error);
     } else {
       setNotes(response.data);
       setError(null);
     }
 
     setLoading(false);
-  }
+  };
 
   //!SECTION Add new note
   const addNote = async () => {
     if (typeof newNote !== "string" || newNote.trim() === "") return;
 
-    const response = await noteService.addNote(newNote)
+    const response = await noteService.addNote(newNote);
 
     if (response.error) {
-      Alert.alert('Error', response.error);
+      Alert.alert("Error", response.error);
     } else {
-      setNotes([...notes, response.data])
+      setNotes([...notes, response.data]);
     }
-    
 
     setNewNote("");
     setModalVisible(false);
@@ -60,38 +58,55 @@ const NoteScreen = () => {
 
   //!SECTION delete note
   const deleteNote = async (id) => {
-    Alert.alert('Delete note', 'Are you sure you want to delete this note?', [
+    Alert.alert("Delete note", "Are you sure you want to delete this note?", [
       {
-        text: 'Cancel',
-        style: 'cancel'
+        text: "Cancel",
+        style: "cancel",
       },
       {
-        text: 'Delete',
-        style: 'destructive',
+        text: "Delete",
+        style: "destructive",
         onPress: async () => {
           const response = await noteService.deleteNote(id);
-          if(response.error){
-            Alert.alert('Error', response.error);
+          if (response.error) {
+            Alert.alert("Error", response.error);
           } else {
             setNotes(notes.filter((note) => note.$id !== id));
           }
-        }
-      }
-    ]
+        },
+      },
+    ]);
+  };
 
-    )
-  }
+  //Edit note
+  const editNote = async (id, newText) => {
+    if (!newText.trim()) {
+      Alert.alert("Error", "Note text cannot be empty");
+      return;
+    }
+
+    const response = await noteService.updateNote(id, newText);
+    if (response.error) {
+      Alert.alert("Error", response.error);
+    } else {
+      setNotes((prevNotes) =>
+        prevNotes.map((note) =>
+          note.$id === id ? { ...note, text: response.data.text } : note
+        )
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
       {loading ? (
-        <ActivityIndicator size='large' color='#007bff'/>
+        <ActivityIndicator size="large" color="#007bff" />
       ) : (
         <>
-          {error && <Text style={ styles.errorText}>{error}</Text>}
-          <NoteList notes={notes} onDelete={deleteNote}/>
+          {error && <Text style={styles.errorText}>{error}</Text>}
+          <NoteList notes={notes} onDelete={deleteNote} onEdit={editNote} />
         </>
-      ) }
+      )}
 
       <TouchableOpacity
         style={styles.addButton}
@@ -139,7 +154,13 @@ const styles = StyleSheet.create({
     fontSize: 16, // Slightly larger font size for readability
     fontWeight: "bold", // Bold text for emphasis
   },
-  
+  errorText: {
+    color: "#ff0000",
+    fontSize: 16,
+    textAlign: "center",
+    marginVertical: 10,
+    fontWeight: "bold",
+  },
 });
 
 export default NoteScreen;

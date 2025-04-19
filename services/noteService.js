@@ -38,15 +38,28 @@ const noteService = {
 
     return { data: response };
   },
-  // Delet notes
-  async deleteNote(id) {
-    const response = await databaseService.deleteDocument(dbId,colId, id)
+  //Update Notes
+  async updateNote(id, text) {
+    const response = await databaseService.updateDocument(dbId, colId, id, {
+      text,
+    });response.error
+
     if (response?.error){
-        return { error: response.error}  
+      return {error: response.error }
     }
 
-    return { succsess: true};
-  }
+    return {data: response};
+  },
+
+  // Delet notes
+  async deleteNote(id) {
+    const response = await databaseService.deleteDocument(dbId, colId, id);
+    if (response?.error) {
+      return { error: response.error };
+    }
+
+    return { succsess: true };
+  },
 };
 
 export default noteService;
